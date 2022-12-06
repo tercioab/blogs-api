@@ -7,8 +7,7 @@ const getUserByEmail = async (email, password) => {
         return { status: 400, message: 'Invalid fields' };
     }
     const { password: _, ...userWithoutPassword } = user.dataValues;
-    const payload = { data: userWithoutPassword };
-    const token = createToken(payload);
+    const token = createToken(userWithoutPassword);
     return { status: 200, token };
 };
 
