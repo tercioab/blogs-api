@@ -6,6 +6,6 @@ const user = require('../controller/user');
 
 const midd = require('../middlewares/user');
 
-router.post('/', ...midd, user.example);
+router.post('/', midd, user.example);
 
 module.exports = router;
