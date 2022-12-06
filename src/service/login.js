@@ -1,7 +1,7 @@
 const { User } = require('../models');
 const { createToken } = require('../auth/jwtFunctions');
 
-const getUserByEmail = async (email, password) => {
+const login = async (email, password) => {
     const user = await User.findOne({ where: { email } });
     if (!user || password !== user.password) {
         return { status: 400, message: 'Invalid fields' };
@@ -12,5 +12,5 @@ const getUserByEmail = async (email, password) => {
 };
 
 module.exports = {
-    getUserByEmail,
+    login,
 };

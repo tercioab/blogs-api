@@ -1,8 +1,8 @@
-const userService = require('../service/user');
+const loginService = require('../service/login');
 
 const login = async (req, res) => {
     const { email, password } = req.body;
-    const { status, message, token } = await userService.getUserByEmail(email, password);
+    const { status, message, token } = await loginService.login(email, password);
    
     if (message) {
        return res.status(status).json({ message });
