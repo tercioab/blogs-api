@@ -4,8 +4,16 @@ const router = express.Router();
 
 const user = require('../controller/user');
 
-const midd = require('../middlewares/user');
+const {
+    verifyLengthsName,
+    validEmail,
+    verifyLengthsPassword,
+    verifyEmailExist,
+} = require('../middlewares/user');
 
-router.post('/', midd, user.example);
+router.post('/', verifyLengthsName,
+validEmail,
+verifyLengthsPassword,
+verifyEmailExist, user.newUser);
 
 module.exports = router;
