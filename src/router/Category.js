@@ -6,5 +6,6 @@ const { nameRequired } = require('../middlewares/category');
 const { verifyToken } = require('../auth/jwtFunctions');
 
 router.post('/', nameRequired, verifyToken, category.insertCategory);
+router.get('/', verifyToken, category.getAllCategory);
 
 module.exports = router; 
