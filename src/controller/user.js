@@ -4,18 +4,23 @@ const { createToken } = require('../auth/jwtFunctions');
 const newUser = async (req, res) => {
     const { displayName, email, password, image } = req.body;
     const user = await userService.newUser({ displayName, email, password, image });
-   
     const token = createToken(user);
-    
     res.status(201).json({ token });
 };
 
-const getAll = async (req, res) => {
-    const allUsers = await userService.getAll();
+const getAlluser = async (req, res) => {
+    const allUsers = await userService.getAlluser();
     res.status(200).json(allUsers);
+};
+
+const userbyId = async (req, res) => {
+    const { id } = req.params;
+    const { user } = await userService.userbyId(id);
+    res.status(200).json(user);
 };
 
 module.exports = {
     newUser,
-    getAll,
+    getAlluser,
+    userbyId,
 };
