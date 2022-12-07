@@ -48,7 +48,7 @@ services:
 
   # Serviço que irá rodar o banco de dados
   db:
-    container_name: blogs_api_db
+    container_name: b´logs_api_db
     image: mysql:8.0.23
     # Indica de forma fixa a plataforma na qual o banco irá rodar
     platform: linux/x86_64
