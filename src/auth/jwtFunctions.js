@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const secret = process.env.JWT_SECRET || 'seupassword';
+const secret = process.env.JWT_SECRET;
 
 const jwtConfig = { algorithm: 'HS256', expiresIn: '15min' };
 
@@ -10,14 +10,20 @@ const createToken = (userWithoutPassword) => {
     return token;
 };
 
-const verifyToken = (authorization) => {
+const verifyToken = (req, res, next) => {
+    const token = req.header('Authorization');
+    if (!token) {
+      return res.status(401).json({ message: 'Token not found' });
+    }
     try {
-        const payload = jwt.verify(authorization, secret);
-    return payload;
-    } catch (e) {
-        console.log(e.message);
-}
-};
+      const result = jwt.verify(token, secret);
+      req.currentUser = result;
+      next();
+    } catch (error) {
+      return res.status(401).json({ message: 'Expired or invalid token' });
+    }
+  };
+  
 module.exports = {
     createToken,
     verifyToken,

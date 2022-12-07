@@ -11,9 +11,14 @@ const {
     verifyEmailExist,
 } = require('../middlewares/user');
 
-router.post('/', verifyLengthsName,
-validEmail,
-verifyLengthsPassword,
-verifyEmailExist, user.newUser);
+const { verifyToken } = require('../auth/jwtFunctions');
+
+router.post('/',
+    verifyLengthsName,
+    validEmail,
+   verifyLengthsPassword,
+    verifyEmailExist, user.newUser);
+
+    router.get('/', verifyToken, user.getAll);
 
 module.exports = router;
