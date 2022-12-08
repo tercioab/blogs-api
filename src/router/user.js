@@ -22,5 +22,6 @@ router.post('/',
 
 router.get('/', verifyToken, user.getAlluser);
 router.get('/:id', verifyToken, verifyUserExist, user.userbyId);
+router.delete('/me', verifyToken, user.deleteMe);
 
 module.exports = router;

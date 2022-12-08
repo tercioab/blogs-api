@@ -32,10 +32,10 @@ const verifyPostExist = async (req, res, next) => {
 
 const verifyUserId = async (req, res, next) => {
     const { id } = req.params;
-    const tokenUser = req.currentUser;
+    const tokenUser = req.currentUser.data;
     const { userId } = await getPostById(id);
     console.log(userId);
-    if (tokenUser.data.id !== userId) {
+    if (tokenUser.id !== userId) {
        return res.status(401).json({ message: 'Unauthorized user' }); 
     } next();
 };

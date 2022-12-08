@@ -19,8 +19,17 @@ const userbyId = async (req, res) => {
     res.status(200).json(user);
 };
 
+const deleteMe = async (req, res) => {
+    const { id } = req.currentUser.data;
+    await userService.deleteMe(id);
+    res.sendStatus(204);
+};
+
+// User.findAll({ where: { US_USERNAME: { [Op.like]: '%andre' } } })
+
 module.exports = {
     newUser,
     getAlluser,
     userbyId,
+    deleteMe,
 };
