@@ -25,8 +25,6 @@ const deleteMe = async (req, res) => {
     res.sendStatus(204);
 };
 
-// User.findAll({ where: { US_USERNAME: { [Op.like]: '%andre' } } })
-
 module.exports = {
     newUser,
     getAlluser,

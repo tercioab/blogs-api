@@ -12,6 +12,8 @@ router.post('/', verifyToken, requiredFields, verifyCategoryExist, post.newPost)
 
 router.get('/', verifyToken, post.allPosts);
 
+router.get('/search', verifyToken, post.findPost);
+
 router.get('/:id', verifyToken, verifyPostExist, post.getPostById);
 
 router.put('/:id', verifyToken, verifyUserId, requiredFieldsUpdatePost, post.updatePost);
