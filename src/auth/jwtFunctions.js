@@ -1,14 +1,10 @@
-const jwt = require('jsonwebtoken');
+const { sign, verify } = require('jsonwebtoken');
 
 const secret = process.env.JWT_SECRET;
 
 const jwtConfig = { algorithm: 'HS256', expiresIn: '10h' };
 
-const createToken = (userWithoutPassword) => {
-    const token = jwt
-        .sign({ data: userWithoutPassword }, secret, jwtConfig);
-    return token;
-};
+const createToken = (userWithoutPassword) => sign({ data: userWithoutPassword }, secret, jwtConfig);
 
 const verifyToken = (req, res, next) => {
     const token = req.header('Authorization');
@@ -16,7 +12,7 @@ const verifyToken = (req, res, next) => {
       return res.status(401).json({ message: 'Token not found' });
     }
     try {
-      const result = jwt.verify(token, secret);
+      const result = verify(token, secret);
       req.currentUser = result;
       next();
     } catch (error) {
