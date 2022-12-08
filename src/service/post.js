@@ -17,10 +17,16 @@ const getPostById = async (id) => BlogPost.findByPk(id, {
       { model: User, as: 'user', attributes: { exclude: ['password'] } },
       { model: Category, as: 'categories', through: { attributes: [] } },
     ],
-  });
+});
+  
+const updatePost = async (title, content, id) => BlogPost.update(
+    { title, content },
+    { where: { id } },
+);
 
 module.exports = {
     newPost,
     allPosts,
     getPostById,
+    updatePost,
 };

@@ -30,8 +30,27 @@ const verifyPostExist = async (req, res, next) => {
     } next();
 };
 
+const verifyUserId = async (req, res, next) => {
+    const { id } = req.params;
+    const tokenUser = req.currentUser;
+    const { userId } = await getPostById(id);
+    console.log(userId);
+    if (tokenUser.data.id !== userId) {
+       return res.status(401).json({ message: 'Unauthorized user' }); 
+    } next();
+};
+
+const requiredFieldsUpdatePost = (req, res, next) => {
+    const { title, content } = req.body;
+    if (!title || !content) {
+       return res.status(400).json({ message: 'Some required fields are missing' });
+    } next();
+};
+
 module.exports = {
     verifyCategoryExist,
     requiredFields,
     verifyPostExist,
+    verifyUserId,
+    requiredFieldsUpdatePost,
 };
