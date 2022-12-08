@@ -17,7 +17,7 @@ const verifyLengthsPassword = (req, res, next) => {
 };
 
 const emailFormat = (email) => {
-    const ruleEmail = /\S+@\S+\.\S+/;
+    const ruleEmail = /\S+@title\S+\.\S+/;
     const emailOk = ruleEmail.test(email);
     return emailOk;
 };
