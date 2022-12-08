@@ -14,7 +14,7 @@ const { title, content, categoryIds } = req.body;
     }
 };
 
-const allPosts = async (req, res) => {
+const allPosts = async (_req, res) => {
     try {
         const posts = await postService.allPosts();
       return res.status(200).json(posts);
@@ -23,7 +23,18 @@ const allPosts = async (req, res) => {
     }
 };
 
+const getPostById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const post = await postService.getPostById(id);
+        return res.status(200).json(post);
+    } catch (e) {
+        return res.status(500).json({ message: e.message });
+    }
+};
+
 module.exports = {
     newPost,
     allPosts,
+    getPostById,
 };

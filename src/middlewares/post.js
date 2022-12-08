@@ -1,4 +1,5 @@
 const { categoryById } = require('../service/category');
+const { getPostById } = require('../service/post');
 
 const verifyCategoryExist = async (req, res, next) => {
     const { categoryIds } = req.body;
@@ -21,7 +22,16 @@ const requiredFields = (req, res, next) => {
     } next();
 };
 
+const verifyPostExist = async (req, res, next) => {
+    const { id } = req.params;
+    const postExist = await getPostById(id); 
+    if (!postExist) {
+        return res.status(404).json({ message: 'Post does not exist' });
+    } next();
+};
+
 module.exports = {
     verifyCategoryExist,
     requiredFields,
+    verifyPostExist,
 };
