@@ -2,8 +2,8 @@ const express = require('express');
 
 const router = express.Router();
 const login = require('../controller/login');
-const { verifyFields } = require('../middlewares/login');
+const { verifyFields, invalidField } = require('../middlewares/login');
 
-router.post('/', verifyFields, login.login);
+router.post('/', verifyFields, invalidField, login.login);
 
 module.exports = router; 
