@@ -6,7 +6,6 @@ const insertCategory = async (req, res) => {
     const category = await categoryService.insertCategory(name);
     return res.status(201).json(category);
     } catch (e) {
-        console.log(e.message);
         return res.status(500).json({ message: e.message });
   }
 };
