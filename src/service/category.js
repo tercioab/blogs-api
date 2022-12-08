@@ -11,10 +11,8 @@ const categoryById = async (id) => {
     } return true;
 };
 
-const createPostCategory = async (postId, categoryId) => {
-    const postCtg = PostCategory.create({ postId, categoryId });
-    return postCtg;
-};
+const createPostCategory = async (postId, categoryId) => PostCategory
+    .create({ postId, categoryId });
 
 module.exports = {
     insertCategory,

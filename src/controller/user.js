@@ -8,7 +8,7 @@ const newUser = async (req, res) => {
     res.status(201).json({ token });
 };
 
-const getAlluser = async (req, res) => {
+const getAlluser = async (_req, res) => {
     const allUsers = await userService.getAlluser();
     res.status(200).json(allUsers);
 };
