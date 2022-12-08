@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const secret = process.env.JWT_SECRET;
 
-const jwtConfig = { algorithm: 'HS256', expiresIn: '15min' };
+const jwtConfig = { algorithm: 'HS256', expiresIn: '10h' };
 
 const createToken = (userWithoutPassword) => {
     const token = jwt

@@ -7,17 +7,16 @@ const insertCategory = async (req, res) => {
     return res.status(201).json(category);
     } catch (e) {
         console.log(e.message);
-        return res.status(500).json({ message: 'Algo deu errado' });
+        return res.status(500).json({ message: e.message });
   }
 };
 
-const getAllCategory = async (req, res) => {
+const getAllCategory = async (_req, res) => {
     try {
         const category = await categoryService.getAllCategory();
         res.status(200).json(category);
     } catch (e) {
-        console.log(e.message);
-        return res.status(500).json({ message: 'Algo deu errado' });
+        return res.status(500).json({ message: e.message });
     }
 };
 
