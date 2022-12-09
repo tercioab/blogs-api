@@ -1,29 +1,26 @@
 const postService = require('../service/post');  
 const { createPostCategory } = require('../service/category');
 
-const newPostCategory = (categoryIds, dataValues) => {
-    categoryIds.map((idCategorys) => createPostCategory(dataValues, idCategorys));
-};
-
 const newPost = async (req, res) => {
     try {
-        const { title, content, categoryIds } = req.body;
+const { title, content, categoryIds } = req.body;
         const { id } = req.currentUser.data;
         const { dataValues } = await postService.newPost(title, content, categoryIds, id);
-            newPostCategory(categoryIds, dataValues.id);
-                return res.status(201).json({ ...dataValues, userId: id });
-        } catch (e) {
-        res.status(500).json({ message: e.message });
+        categoryIds.map(async (idCategory) => createPostCategory(dataValues.id, idCategory));
+        return res.status(201).json({ ...dataValues, userId: id });
+} catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: e.message });
     }
 };
 
 const allPosts = async (_req, res) => {
     try {
         const posts = await postService.allPosts();
-        return res.status(200).json(posts);
-        } catch (e) {
+      return res.status(200).json(posts);
+    } catch (e) {
         return res.status(500).json({ message: e.message });
-        }
+    }
 };
 
 const getPostById = async (req, res) => {
@@ -42,6 +39,7 @@ const updatePost = async (req, res) => {
     await postService.updatePost(title, content, id);
   
     const post = await postService.getPostById(id);
+    console.log(post.userId);
     res.status(200).json(post);
 };
 

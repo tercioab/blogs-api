@@ -12,7 +12,7 @@ router.get('/', verifyToken, post.allPosts);
 
 router.get('/search', verifyToken, post.findPost);
 
-router.post('/', verifyToken, requiredFields, verifyCategoryExist, post.newPost);
+router.post('/', verifyToken, verifyCategoryExist, requiredFields, post.newPost);
 
 router.get('/:id', verifyToken, verifyPostExist, post.getPostById);
 
