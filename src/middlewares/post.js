@@ -3,9 +3,12 @@ const { getPostById } = require('../service/post');
 
 const verifyCategoryExist = async (req, res, next) => {
     const { categoryIds } = req.body;
-    const conferenceId = await Promise.all(categoryIds.map(categoryById));
+    const conferenceId = await Promise.all(categoryIds.map(async (ids) => {
+        const conference = await categoryById(ids);
+        return conference;
+    }));
 
-    const categoryNotFound = conferenceId.some((result) => !result);
+    const categoryNotFound = conferenceId.some((result) => result === false);
 
     if (categoryNotFound) {
        return res.status(400).json({ message: 'one or more "categoryIds" not found' });
@@ -32,7 +35,7 @@ const verifyUserId = async (req, res, next) => {
     const tokenUser = req.currentUser.data;
     const { userId } = await getPostById(id);
     console.log(userId);
-    if (tokenUser.data.id !== userId) {
+    if (tokenUser.id !== userId) {
        return res.status(401).json({ message: 'Unauthorized user' }); 
     } next();
 };

@@ -6,7 +6,8 @@ const newPost = async (req, res) => {
 const { title, content, categoryIds } = req.body;
         const { id } = req.currentUser.data;
         const { dataValues } = await postService.newPost(title, content, categoryIds, id);
-        categoryIds.map(async (idCategory) => createPostCategory(dataValues.id, idCategory));
+        await Promise.all(categoryIds
+            .map((idCategory) => createPostCategory(dataValues.id, idCategory)));
         return res.status(201).json({ ...dataValues, userId: id });
 } catch (e) {
     console.log(e.message);
