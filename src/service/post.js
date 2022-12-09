@@ -20,19 +20,31 @@ const allPosts = async () => BlogPost.findAll({
     ],
 });
   
-const getPostById = async (id) => BlogPost.findByPk(id, {
-    include: [
-      { model: User, as: 'user', attributes: { exclude: ['password'] } },
-      { model: Category, as: 'categories', through: { attributes: [] } },
-    ],
-});
+const getPostById = async (id) => {
+  const post = await BlogPost.findByPk(id, {
+ 
+     include: [
+       { model: User, as: 'user', attributes: { exclude: ['password'] } },
+       { model: Category, as: 'categories', through: { attributes: [] } },
+     ],
+  });
+   
+  if (!post) {
+   return { status: 404, message: 'Post does not exist' };
+ }
+ 
+ return { status: 200, post }; 
+ };
   
 const updatePost = async (title, content, id) => BlogPost.update(
     { title, content },
     { where: { id } },
 );
 
-const deletePost = async (id) => BlogPost.destroy({ where: { id } });
+const deletePost = async (id) => {
+  await getPostById(id);
+  await BlogPost.destroy({ where: { id } });
+};
 
 const findPost = async (titleOrContent) => BlogPost
     .findAll({

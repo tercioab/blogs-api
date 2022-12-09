@@ -7,20 +7,11 @@ const requiredFields = (req, res, next) => {
     } next();
 };
 
-const verifyPostExist = async (req, res, next) => {
-    const { id } = req.params;
-    const postExist = await getPostById(id); 
-    if (!postExist) {
-        return res.status(404).json({ message: 'Post does not exist' });
-    } next();
-};
-
 const verifyUserId = async (req, res, next) => {
     const { id } = req.params;
     const tokenUser = req.currentUser.data;
-    const { userId } = await getPostById(id);
-    console.log(userId);
-    if (tokenUser.id !== userId) {
+    const { post } = await getPostById(id);
+    if (tokenUser.id !== post.dataValues.userId) {
        return res.status(401).json({ message: 'Unauthorized user' }); 
     } next();
 };
@@ -34,7 +25,6 @@ const requiredFieldsUpdatePost = (req, res, next) => {
 
 module.exports = {
     requiredFields,
-    verifyPostExist,
     verifyUserId,
     requiredFieldsUpdatePost,
 };

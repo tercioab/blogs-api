@@ -31,8 +31,11 @@ const allPosts = async (_req, res) => {
 const getPostById = async (req, res) => {
     try {
         const { id } = req.params;
-        const post = await postService.getPostById(id);
-        return res.status(200).json(post);
+        const { post, status, message } = await postService.getPostById(id);
+        if (message) {
+         return res.status(status).json({ message });
+     }
+        return res.status(status).json(post);
     } catch (e) {
         return res.status(500).json({ message: e.message });
     }
@@ -43,15 +46,14 @@ const updatePost = async (req, res) => {
     const { id } = req.params;
     await postService.updatePost(title, content, id);
   
-    const post = await postService.getPostById(id);
-    console.log(post.userId);
+    const { post } = await postService.getPostById(id);
     res.status(200).json(post);
 };
 
 const deletePost = async (req, res) => {
     const { id } = req.params;
     await postService.deletePost(id);
-    res.sendStatus(204);
+    return res.sendStatus(204);
 };
 
 const findPost = async (req, res) => {
