@@ -1,10 +1,8 @@
 const loginService = require('../service/login');
-const { createToken } = require('../auth/jwtFunctions');
 
 const login = async (req, res) => {
     const { email } = req.body;
-    const { userWithoutPassword } = await loginService.login(email);
-    const token = createToken(userWithoutPassword);
+    const { token } = await loginService.login(email);
     res.status(200).json({ token });
 };
 

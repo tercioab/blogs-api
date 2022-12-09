@@ -8,11 +8,11 @@ const { verifyCategoryExist,
     verifyUserId, requiredFieldsUpdatePost,
 } = require('../middlewares/post');
 
-router.post('/', verifyToken, requiredFields, verifyCategoryExist, post.newPost);
-
 router.get('/', verifyToken, post.allPosts);
 
 router.get('/search', verifyToken, post.findPost);
+
+router.post('/', verifyToken, requiredFields, verifyCategoryExist, post.newPost);
 
 router.get('/:id', verifyToken, verifyPostExist, post.getPostById);
 

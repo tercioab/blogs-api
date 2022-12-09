@@ -1,11 +1,18 @@
 const { User } = require('../models');
 
-const invalidField = async (req, res, next) => {
+const validateFields = async (req, res, next) => {
     const { email, password } = req.body;
     const user = await User.findOne({ where: { email } });
-    if (!user || password !== user.password) {
+
+    if (!user) {
         return res.status(400).json({ message: 'Invalid fields' });
-    } next();
+    } 
+
+    if (password !== user.password) {
+        return res.status(400).json({ message: 'Invalid fields' });
+    } 
+    
+    next();
 };
 
 const verifyFields = async (req, res, next) => {
@@ -18,5 +25,5 @@ const verifyFields = async (req, res, next) => {
 
 module.exports = {
     verifyFields,
-    invalidField,
+    validateFields,
 };
