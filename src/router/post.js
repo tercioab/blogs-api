@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const post = require('../controller/post');
 const { verifyToken } = require('../auth/jwtFunctions');
-const { verifyCategoryExist,
+const { 
     requiredFields, verifyPostExist,
     verifyUserId, requiredFieldsUpdatePost,
 } = require('../middlewares/post');
@@ -12,7 +12,7 @@ router.get('/', verifyToken, post.allPosts);
 
 router.get('/search', verifyToken, post.findPost);
 
-router.post('/', verifyToken, verifyCategoryExist, requiredFields, post.newPost);
+router.post('/', verifyToken, requiredFields, post.newPost);
 
 router.get('/:id', verifyToken, verifyPostExist, post.getPostById);
 

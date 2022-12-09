@@ -5,10 +5,14 @@ const newPost = async (req, res) => {
     try {
 const { title, content, categoryIds } = req.body;
         const { id } = req.currentUser.data;
-        const { dataValues } = await postService.newPost(title, content, categoryIds, id);
+        const { status, message, post } = await postService
+            .newPost(title, content, categoryIds, id);
+        if (message) {
+    return res.status(status).json({ message });
+}
         await Promise.all(categoryIds
-            .map((idCategory) => createPostCategory(dataValues.id, idCategory)));
-        return res.status(201).json({ ...dataValues, userId: id });
+            .map((idCategory) => createPostCategory(post.dataValues.id, idCategory)));
+        return res.status(status).json({ ...post.dataValues, userId: id });
 } catch (e) {
     console.log(e.message);
     res.status(500).json({ message: e.message });

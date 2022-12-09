@@ -1,16 +1,4 @@
-const { categoryById } = require('../service/category');
 const { getPostById } = require('../service/post');
-
-const verifyCategoryExist = async (req, res, next) => {
-    const { categoryIds } = req.body;
-    const conferenceId = await Promise.all(categoryIds.map(categoryById));
-
-    const categoryNotFound = conferenceId.some((result) => !result);
-
-    if (categoryNotFound) {
-       return res.status(400).json({ message: 'one or more "categoryIds" not found' });
-    } next();
-};
 
 const requiredFields = (req, res, next) => {
     const { title, content, categoryIds } = req.body;
@@ -45,7 +33,6 @@ const requiredFieldsUpdatePost = (req, res, next) => {
 };
 
 module.exports = {
-    verifyCategoryExist,
     requiredFields,
     verifyPostExist,
     verifyUserId,

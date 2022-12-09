@@ -1,9 +1,16 @@
 const { Op } = require('sequelize');
 const { BlogPost, User, Category } = require('../models');
+const { categoryById } = require('./category');
 
 const newPost = async (title, content, categoryIds, id) => {
+  const conferenceId = await Promise.all(categoryIds.map(categoryById));
+  const categoryNotFound = conferenceId.some((result) => !result);
+
+  if (categoryNotFound) {
+    return { status: 400, message: 'one or more "categoryIds" not found' };
+  }
     const post = await BlogPost.create({ userId: id, title, content, categoryIds });
-    return post;
+    return { status: 201, post };
 };
 
 const allPosts = async () => BlogPost.findAll({
