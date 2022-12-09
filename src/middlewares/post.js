@@ -10,7 +10,12 @@ const requiredFields = (req, res, next) => {
 const verifyUserId = async (req, res, next) => {
     const { id } = req.params;
     const tokenUser = req.currentUser.data;
-    const { post } = await getPostById(id);
+ 
+    const { post, message, status } = await getPostById(id);
+    if (message) {
+        return res.status(status).json({ message });
+    }
+
     if (tokenUser.id !== post.dataValues.userId) {
        return res.status(401).json({ message: 'Unauthorized user' }); 
     } next();

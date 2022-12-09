@@ -37,18 +37,9 @@ const verifyEmailExist = async (req, res, next) => {
     } next();
 };
 
-const verifyUserExist = async (req, res, next) => {
-    const { id } = req.params;
-    const user = await User.findByPk(id, { attributes: { exclude: ['password'] } });
-    if (!user) {
-        return res.status(404).json({ message: 'User does not exist' });
-    } return next();
-};
-
 module.exports = {
     verifyLengthsName,
     validEmail,
     verifyLengthsPassword,
     verifyEmailExist,
-    verifyUserExist,
 };

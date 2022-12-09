@@ -15,8 +15,10 @@ const getAlluser = async (_req, res) => {
 
 const userbyId = async (req, res) => {
     const { id } = req.params;
-    const user = await userService.userbyId(id);
-    res.status(200).json(user);
+    const { user, message, status } = await userService.userbyId(id);
+    if (message) {
+        return res.status(status).json({ message });
+    } return res.status(status).json(user);
 };
 
 const deleteMe = async (req, res) => {
