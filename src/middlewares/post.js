@@ -3,12 +3,9 @@ const { getPostById } = require('../service/post');
 
 const verifyCategoryExist = async (req, res, next) => {
     const { categoryIds } = req.body;
-    const conferenceId = await Promise.all(categoryIds.map(async (ids) => {
-        const conference = await categoryById(ids);
-        return conference;
-    }));
+    const conferenceId = await Promise.all(categoryIds.map(categoryById));
 
-    const categoryNotFound = conferenceId.some((result) => result === false);
+    const categoryNotFound = conferenceId.some((result) => !result);
 
     if (categoryNotFound) {
        return res.status(400).json({ message: 'one or more "categoryIds" not found' });
