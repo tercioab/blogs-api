@@ -1,3 +1,5 @@
+const { emailFormat } = require('../utils/validations');
+
 const verifyLengthsName = (req, res, next) => {
     const { displayName } = req.body;
     if (displayName.length < 8) {
@@ -12,12 +14,6 @@ const verifyLengthsPassword = (req, res, next) => {
         return res.status(400)
             .json({ message: '"password" length must be at least 6 characters long' });
     } next();
-};
-
-const emailFormat = (email) => {
-    const ruleEmail = /\S+@\S+\.\S+/;
-    const emailOk = ruleEmail.test(email);
-    return emailOk;
 };
 
 const validEmail = (req, res, next) => {
