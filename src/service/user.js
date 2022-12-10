@@ -1,8 +1,8 @@
 const { User } = require('../models');
 
 const newUser = async ({ displayName, email, password, image }) => {
-    const emailUser = await User.findOne({ where: { email } });
-    if (emailUser) {
+    const checkemailUserExist = await User.findOne({ where: { email } });
+    if (checkemailUserExist) {
         return { status: 409, message: 'User already registered' };
     }
 
