@@ -5,7 +5,7 @@ const post = require('../controller/post');
 const { verifyToken } = require('../auth/jwtFunctions');
 const { 
     requiredFields,
-    verifyUserId, requiredFieldsUpdatePost,
+  requiredFieldsUpdatePost,
 } = require('../middlewares/post');
 
 router.get('/', verifyToken, post.allPosts);
@@ -16,7 +16,8 @@ router.post('/', verifyToken, requiredFields, post.newPost);
 
 router.get('/:id', verifyToken, post.getPostById);
 
-router.put('/:id', verifyToken, verifyUserId, requiredFieldsUpdatePost, post.updatePost);
-module.exports = router; 
+router.put('/:id', verifyToken, requiredFieldsUpdatePost, post.updatePost);
 
-router.delete('/:id', verifyToken, verifyUserId, post.deletePost);
+router.delete('/:id', verifyToken, post.deletePost);
+
+module.exports = router; 

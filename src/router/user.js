@@ -8,7 +8,6 @@ const {
     verifyLengthsName,
     validEmail,
     verifyLengthsPassword,
-    verifyEmailExist,
 } = require('../middlewares/user');
 
 const { verifyToken } = require('../auth/jwtFunctions');
@@ -17,7 +16,7 @@ router.post('/',
     verifyLengthsName,
     validEmail,
    verifyLengthsPassword,
-    verifyEmailExist, user.newUser);
+  user.newUser);
 
 router.get('/', verifyToken, user.getAlluser);
 router.get('/:id', verifyToken, user.userbyId);

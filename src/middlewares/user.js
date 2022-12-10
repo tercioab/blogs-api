@@ -1,5 +1,3 @@
-const { User } = require('../models');
-
 const verifyLengthsName = (req, res, next) => {
     const { displayName } = req.body;
     if (displayName.length < 8) {
@@ -29,17 +27,8 @@ const validEmail = (req, res, next) => {
     } next();
 };
 
-const verifyEmailExist = async (req, res, next) => {
-    const { email } = req.body;
-    const user = await User.findOne({ where: { email } });
-    if (user) {
-        return res.status(409).json({ message: 'User already registered' });
-    } next();
-};
-
 module.exports = {
     verifyLengthsName,
     validEmail,
     verifyLengthsPassword,
-    verifyEmailExist,
 };

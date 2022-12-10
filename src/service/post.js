@@ -36,14 +36,31 @@ const getPostById = async (id) => {
  return { status: 200, post }; 
  };
   
-const updatePost = async (title, content, id) => BlogPost.update(
+const updatePost = async (title, content, id, tokenUser) => {
+  const { post } = await getPostById(id);
+  if (tokenUser.id !== post.dataValues.userId) {
+    return { status: 401, message: 'Unauthorized user' };
+  } 
+  
+  await BlogPost.update(
     { title, content },
     { where: { id } },
-);
+); 
+return { status: 200 };
+};
 
-const deletePost = async (id) => {
-  await getPostById(id);
-  await BlogPost.destroy({ where: { id } });
+const deletePost = async (id, tokenUser) => {
+  const { post, message, status } = await getPostById(id);
+  
+  if (message) {
+    return { status, message };
+  }
+ 
+    if (tokenUser.id !== post.dataValues.userId) {
+    return { status: 401, message: 'Unauthorized user' };
+  }
+   await BlogPost.destroy({ where: { id } });
+    return { status: 204 };
 };
 
 const findPost = async (titleOrContent) => BlogPost

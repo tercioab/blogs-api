@@ -44,16 +44,24 @@ const getPostById = async (req, res) => {
 const updatePost = async (req, res) => {
     const { title, content } = req.body;
     const { id } = req.params;
-    await postService.updatePost(title, content, id);
+    const tokenUser = req.currentUser.data;
+    const { status, message } = await postService.updatePost(title, content, id, tokenUser);
+    if (message) {
+        return res.status(status).json({ message });
+    }
   
     const { post } = await postService.getPostById(id);
-    res.status(200).json(post);
+    res.status(status).json(post);
 };
 
 const deletePost = async (req, res) => {
     const { id } = req.params;
-    await postService.deletePost(id);
-    return res.sendStatus(204);
+    const tokenUser = req.currentUser.data;
+    const { status, message } = await postService.deletePost(id, tokenUser);
+    if (message) {
+        return res.status(status).json({ message });
+    }
+    return res.sendStatus(status);
 };
 
 const findPost = async (req, res) => {

@@ -1,8 +1,14 @@
 const { User } = require('../models');
 
 const newUser = async ({ displayName, email, password, image }) => {
+    const emailUser = await User.findOne({ where: { email } });
+    if (emailUser) {
+        return { status: 409, message: 'User already registered' };
+    }
+
     const user = await User.create({ displayName, email, password, image });
-    return user;
+
+    return { status: 201, user };
 };
 
 const getAlluser = async () => User.findAll({ attributes: { exclude: ['password'] } });

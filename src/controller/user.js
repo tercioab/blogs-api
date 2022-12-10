@@ -3,9 +3,12 @@ const { createToken } = require('../auth/jwtFunctions');
 
 const newUser = async (req, res) => {
     const { displayName, email, password, image } = req.body;
-    const user = await userService.newUser({ displayName, email, password, image });
-    const token = createToken(user);
-    res.status(201).json({ token });
+    const { user, message, status } = await userService
+    .newUser({ displayName, email, password, image });
+if (message) {
+    return res.status(status).json({ message });
+} const token = createToken(user);
+    res.status(status).json({ token });
 };
 
 const getAlluser = async (_req, res) => {
