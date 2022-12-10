@@ -5,17 +5,13 @@ const router = express.Router();
 const user = require('../controller/user');
 
 const {
-    verifyLengthsName,
-    validEmail,
-    verifyLengthsPassword,
+    verifyUser,
 } = require('../middlewares/user');
 
 const { verifyToken } = require('../auth/jwtFunctions');
 
 router.post('/',
-    verifyLengthsName,
-    validEmail,
-   verifyLengthsPassword,
+   verifyUser,
   user.newUser);
 
 router.get('/', verifyToken, user.getAlluser);

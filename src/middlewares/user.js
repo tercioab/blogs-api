@@ -1,30 +1,21 @@
-const { emailFormat } = require('../utils/validations');
+const Joi = require('joi');
 
-const verifyLengthsName = (req, res, next) => {
-    const { displayName } = req.body;
-    if (displayName.length < 8) {
+const verifyUser = (req, res, next) => {
+    const schema = Joi.object({
+        password: Joi.string().min(6).required(),
+        email: Joi.string().email().required(),
+        displayName: Joi.string().min(8).required(),
+        image: Joi.string(),
+    });
+    const { error } = schema.validate(req.body);
+    if (error) {
         return res.status(400)
-            .json({ message: '"displayName" length must be at least 8 characters long' });
-    } next();
-};
-
-const verifyLengthsPassword = (req, res, next) => {
-    const { password } = req.body;
-    if (password.length < 6) {
-        return res.status(400)
-            .json({ message: '"password" length must be at least 6 characters long' });
-    } next();
-};
-
-const validEmail = (req, res, next) => {
-    const { email } = req.body;
-    if (!emailFormat(email)) {
-      return res.status(400).json({ message: '"email" must be a valid email' });
-    } next();
-};
+            .json({ message: error.details[0].message });
+    }
+  
+    next();
+  };
 
 module.exports = {
-    verifyLengthsName,
-    validEmail,
-    verifyLengthsPassword,
+    verifyUser,
 };

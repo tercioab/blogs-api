@@ -14,7 +14,6 @@ const { title, content, categoryIds } = req.body;
             .map((idCategory) => createPostCategory(post.dataValues.id, idCategory)));
         return res.status(status).json({ ...post.dataValues, userId: id });
 } catch (e) {
-    console.log(e.message);
     res.status(500).json({ message: e.message });
     }
 };
