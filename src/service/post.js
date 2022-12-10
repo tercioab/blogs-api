@@ -2,11 +2,13 @@ const { Op } = require('sequelize');
 const { BlogPost, User, Category } = require('../models');
 const { categoryById } = require('./category');
 
-const newPost = async (title, content, categoryIds, id) => {
+const checkCategoryExist = async (categoryIds) => {
   const conferenceId = await Promise.all(categoryIds.map(categoryById));
-  const categoryNotFound = conferenceId.some((result) => !result);
+  return conferenceId.some((result) => !result);
+};
 
-  if (categoryNotFound) {
+const newPost = async (title, content, categoryIds, id) => {
+  if (await checkCategoryExist(categoryIds)) {
     return { status: 400, message: 'one or more "categoryIds" not found' };
   }
     const post = await BlogPost.create({ userId: id, title, content, categoryIds });
@@ -51,7 +53,7 @@ return { status: 200 };
 
 const deletePost = async (id, tokenUser) => {
   const { post, message, status } = await getPostById(id);
-  
+
   if (message) {
     return { status, message };
   }
