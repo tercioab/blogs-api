@@ -1,9 +1,9 @@
 const { Op } = require('sequelize');
 const { BlogPost, User, Category } = require('../models');
-const { categoryById } = require('./category');
+const { foundCategory } = require('./category');
 
 const checkCategoryExist = async (categoryIds) => {
-  const conferenceId = await Promise.all(categoryIds.map(categoryById));
+  const conferenceId = await Promise.all(categoryIds.map(foundCategory));
   return conferenceId.some((result) => !result);
 };
 

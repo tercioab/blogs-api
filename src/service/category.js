@@ -4,7 +4,7 @@ const insertCategory = async (name) => Category.create({ name });
 
 const getAllCategory = async () => Category.findAll();  
 
-const categoryById = async (id) => {
+const foundCategory = async (id) => {
     const categoryId = await Category.findByPk(id);
     if (!categoryId) {
         return false;
@@ -17,6 +17,6 @@ const createPostCategory = async (postId, categoryId) => PostCategory
 module.exports = {
     insertCategory,
     getAllCategory,
-    categoryById,
+    foundCategory,
     createPostCategory,
 };
