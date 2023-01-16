@@ -32,7 +32,7 @@ npm start
 
 ```
 
-4. A API estará disponível em `http://localhost:3000`.
+5. A API estará disponível em `http://localhost:3000`.
 
 ## Rotas
 
