@@ -9,14 +9,14 @@ Para instalar e executar esse projeto, você precisará ter o [Docker](https://w
 1. Clone o repositório para sua máquina local: 
 
 ```
-git clone https://github.com/seu/repositorio
+git clone git@github.com:tercioab/blogs-api.git
 ```
 
 
 2. Entre na pasta do projeto: 
 
 ```
-cd pasta-do-projeto
+cd blogs-api
 ```
 
 3. Execute o comando `docker-compose up` para construir e iniciar os contêineres. 
