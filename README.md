@@ -19,16 +19,23 @@ git clone git@github.com:tercioab/blogs-api.git
 cd blogs-api
 ```
 
-3. Execute o comando `docker-compose up` para construir e iniciar os contêineres. 
+3. construa e inicie os contêineres. 
 
 ```
 docker-compose up
 ```
 
-4. Execute o comando "npm start" para rodar o projeto
+4. Entre no container 
 
 ```
-npm start
+docker exec -it blogs_api bash
+
+```
+
+4. Rode o projeto
+
+```
+npm run start
 
 ```
 
