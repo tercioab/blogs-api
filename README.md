@@ -31,15 +31,25 @@ docker-compose up
 docker exec -it blogs_api bash
 
 ```
-
-4. Rode o projeto
-
-```
-npm run start
+5. Instale as dependencias
 
 ```
+npm install
+```
 
-5. A API estará disponível em `http://localhost:3000`.
+6. crie o bango e gere as tabelas
+
+```
+npm run prestart
+```
+
+7. Popule a tabela
+
+```
+npm run seed
+```
+
+### A API estará disponível em `http://localhost:3000`.
 
 ## Rotas
 
